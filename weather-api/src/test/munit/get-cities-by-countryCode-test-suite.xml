@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="get-cities-by-countryCode-test-suite.xml" />
+	<munit:test name="get-cities-by-countryCode-test-suite-get:\geo\country\(countryCode)\cities:weather-api-configTest" doc:id="7d6126ed-51bf-4565-81a9-435aff336be6" description="Test">
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to get:\geo\country\(countryCode)\cities:weather-api-config" doc:id="f6929b90-63bf-4765-82d8-9a008da85e48" name="get:\geo\country\(countryCode)\cities:weather-api-config"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="ba26a651-0eee-478a-b047-15c0f72866a7" expression="#[payload]" is="#[MunitTools::equalTo('This is a dummy response')]"/>
+		</munit:validation>
+	</munit:test>
+
+
+</mule>

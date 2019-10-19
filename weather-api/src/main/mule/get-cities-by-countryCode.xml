@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+<flow name="get:\geo\country\(countryCode)\cities:weather-api-config" doc:description="This flow returns all cities for a country based on country Code">
+		<set-payload value="This is a dummy response" doc:name="Set Payload" doc:id="405a530c-a856-4fdd-afc2-d0327171d721" />
+
+        
+      
+    </flow>
+	
+</mule>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:munit="http://www.mulesoft.org/schema/mule/munit"
+	xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<munit:config name="weather-api-test-suite.xml" />
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="f3991a0e-bb8d-435b-af41-fbd3870c5490" basePath="/data/v1" >
+		<http:request-connection host="localhost" port="8081" />
+	</http:request-config>
+	<munit:test name="weather-api-test-suite-GetCitesbyCountry" doc:id="96e9377f-bfd2-437e-adea-6af8c166fd21" description="Test" ignore="true">
+		<munit:execution >
+			<http:request method="GET" doc:name="Request" doc:id="a201a907-0264-410b-9eab-a9a74a9ce87f" config-ref="HTTP_Request_configuration" path="/geo/Australia/cities">
+			</http:request>
+		</munit:execution>
+		<munit:validation >
+			<logger level="INFO" doc:name="Logger" doc:id="121c3c24-b236-4c74-898b-c967948ed277" message="#[payload]"/>
+			<munit-tools:assert-that doc:name="Assert that" doc:id="47d7afb5-2920-42e4-8927-9a1cd67c23f2" expression="#[payload]" is="#[MunitTools::notNullValue()]"/>
+		</munit:validation>
+	</munit:test>
+	
+	<munit:test name="weather-api-test-suite-GetWeather" doc:id="d2ddaee5-487d-4a87-9120-eb3e167f4483" description="Test" ignore="true">
+		<munit:execution >
+			<http:request method="GET" doc:name="Request" doc:id="39b4c66d-603a-44ef-9ed6-bd090811d17d" config-ref="HTTP_Request_configuration" path="/weather?country=Australia&amp;&amp;city=Melbourne">
+			</http:request>
+		</munit:execution>
+		<munit:validation >
+			<logger level="INFO" doc:name="Logger" doc:id="76b554d3-d0c2-44ec-b850-1e0f4aa69c89" message="#[payload]"/>
+			<munit-tools:assert-that doc:name="Assert that" doc:id="39d8499d-c487-4e81-b70f-65202d9d9ca2" expression="#[payload]" is="#[MunitTools::notNullValue()]"/>
+		</munit:validation>
+	</munit:test>
+	
+
+
+</mule>

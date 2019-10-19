@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="get-weather-test-suite.xml" />
+	<munit:test name="get-weather-test-suite-get:\weather:weather-api-configTest" doc:id="4a19c44a-8859-4e61-a56e-f1ee7c0a062b" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="f8e797f8-31d0-48aa-9064-aa715e2f29d6" processor="sub-flow">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="Invoke_Weather_WS_12_Sub_Flow" attributeName="name" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#['&lt;soap:Envelope xmlns:soap=&quot;http://www.w3.org/2003/05/soap-envelope&quot; xmlns:web=&quot;http://www.webserviceX.NET&quot;&gt;
+   &lt;soap:Header/&gt;
+   &lt;soap:Body&gt;
+     &lt;web:GetWeatherResponse xmlns:web=&quot;http://www.webserviceX.NET&quot;&gt;
+         &lt;web:GetWeatherResult&gt;
+            &lt;NewDataSet&gt;
+               &lt;Location&gt;Melbourne&lt;/Location&gt;
+               &lt;Time&gt;11 AM&lt;/Time&gt;
+               &lt;Wind&gt;15 km per hour&lt;/Wind&gt;
+               &lt;Visibility&gt;10 km&lt;/Visibility&gt;
+               &lt;SkyConditions&gt;sunny&lt;/SkyConditions&gt;
+               &lt;Temperature&gt;18&lt;/Temperature&gt;
+               &lt;DewPoint&gt;2 C&lt;/DewPoint&gt;
+               &lt;RelativeHumidity&gt;35&lt;/RelativeHumidity&gt;
+               &lt;Status&gt;Normal&lt;/Status&gt;
+            &lt;/NewDataSet&gt;
+         &lt;/web:GetWeatherResult&gt;
+      &lt;/web:GetWeatherResponse&gt;
+   &lt;/soap:Body&gt;
+&lt;/soap:Envelope&gt;']" mediaType="application/xml" encoding="UTF-8" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<munit:set-event doc:name="Set Event" doc:id="d47b1808-9a5e-41f2-97af-414063f3c34e">
+				<munit:attributes value="#[{'queryParams':{'country':'Australia','city':'Melbourne'}}]" />
+
+			
+			</munit:set-event>
+			<flow-ref doc:name="Flow-ref to get:\weather:weather-api-config" doc:id="b45675ed-1809-4721-b299-3daa92e4c920" name="get:\weather:weather-api-config"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="c43a0772-a5f1-42bc-b252-89c1eeb1522a" expression="#[payload]" is="#[MunitTools::equalTo({SkyConditions:'sunny',Status:'Normal',Temperature:'18',RelativeHumidity:'35',WindSpeed:'15 km per hour',Time:'11 AM',Visibility:'10 km',DewPoint:'2 C',Location:'Melbourne'})]"/>
+		</munit:validation>
+	</munit:test>
+
+
+</mule>

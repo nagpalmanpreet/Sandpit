@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:wsc="http://www.mulesoft.org/schema/mule/wsc"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/wsc http://www.mulesoft.org/schema/mule/wsc/current/mule-wsc.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="get:\geo\(country)\cities:weather-api-config" doc:description="This flow returns all cities for a country based on country Name">
+		<ee:transform doc:name="Transform Message" doc:id="850ca200-667c-4558-b07e-d0a9b4794541" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+ns ns0 http://www.webserviceX.NET
+---
+{
+	ns0#GetCitiesByCountry: {
+		ns0#CountryName: attributes.uriParams.country
+	}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<flow-ref doc:name="Flow Reference" doc:id="b4ed12a7-0266-4ba3-84a5-18aec24c202e" name="Invoke_Weather_WS_11_Sub_Flow"/>
+		<ee:transform doc:name="Transform Message" doc:id="48f8b3a4-c7d8-4d89-a79c-2a250f0e257f" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+ns ns0 http://www.webserviceX.NET
+---
+payload.body.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult.NewDataSet.*Table map ( table , indexOfTable ) -> {
+	Country: table.Country default "",
+	City: table.City default ""
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<error-handler name="get-weatherError_Handler" doc:id="b0c717a5-9fe1-4757-b293-dc189d6f45be">
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="2e486250-33e2-48ba-b4b4-3a47e6ee3162" type="WSC:CANNOT_DISPATCH">
+				<logger level="INFO" doc:name="Logger" doc:id="60012bef-ba37-4807-a174-25ec32cede9f" message='#[{
+	  "Flow":"GetCitiesByCountries",
+	  "ErrorCode":error.errorType,
+	  "Error Description":error.description,
+	  "Error Details":error.detailedDescription,
+	  "Other Detail":error.cause
+	
+	}]'/>
+				<set-payload value='#[{
+	  "ErrorCode":error.errorType,
+	  "Error Description":error.description,
+	  
+	}]' doc:name="Set Payload" doc:id="57729812-6b9f-4b9c-a8cf-c62c84fb2e74" />
+				<ee:transform doc:name="Transform Message" doc:id="12c5d56d-7f28-4460-82a1-123bd7b2e6e0" >
+					<ee:message >
+						<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+			</on-error-propagate>
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="a01efc11-920a-43ef-9eff-38102705ff37" type="ANY">
+				<logger level="INFO" doc:name="Logger" doc:id="d8ee4b8e-9ce4-4357-9fe8-4747a9048459" message='#[{
+	  "Flow":"GetCitiesByCountries",
+	  "ErrorCode":error.errorType,
+	  "Error Description":error.description,
+	  "Error Details":error.detailedDescription,
+	  "Other Detail":error.cause
+	
+	}]'/>
+				<set-payload value='#[{
+	  "ErrorCode":error.errorType,
+	  "Error Description":error.description,
+	  
+	}]' doc:name="Set Payload" doc:id="0de173a7-e27d-4c4e-8718-26fc10e2556f" />
+				<ee:transform doc:name="Transform Message" doc:id="8b1d9a74-a2e7-48d6-a9b3-797f289827f5" >
+					<ee:message >
+						<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+			</on-error-propagate>
+
+			
+	
+</error-handler>
+        
+
+    </flow>
+	<!-- <sub-flow name="Invoke_WeatherWS_Sub_Flow" doc:id="d6a8f4d1-402e-448f-bacd-951cccdd883d" >
+		<wsc:consume operation="GetCitiesByCountry" doc:name="Consume" doc:id="83001b0f-c3ed-4d70-9aa2-9b553b76cbf5" config-ref="MockSOAP11_Web_Service_Consumer_Config" />
+	</sub-flow>  -->
+	
+</mule>

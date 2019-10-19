@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:wsc="http://www.mulesoft.org/schema/mule/wsc"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/wsc http://www.mulesoft.org/schema/mule/wsc/current/mule-wsc.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="get:\weather:weather-api-config" doc:description="This flow returns weather conditions for a a given country and city.">
+		<set-variable value="#[message.attributes.queryParams['city']]" doc:name="Set Variable from Query Param" doc:id="fd73be70-333d-46ff-a59e-cf2ee846706d" variableName="city"/>
+		<set-variable value="#[message.attributes.requestUri]" doc:name="Set Variable from Request URI" doc:id="e3e00426-cb86-4359-ad50-9e168391764d" variableName="requestURI"/>
+		<logger level="INFO" doc:name="Logger" doc:id="56e89725-6a7c-448c-bbe6-0d817885a3e0" message="#[message.attributes.requestUri]"/>
+		<ee:transform doc:name="Create_WebService_Request" doc:id="deef091f-6f0a-4fd0-9198-aee9702f15f3" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+ns ns0 http://www.webserviceX.NET
+---
+{
+	ns0#GetWeather: {
+		ns0#CityName: attributes.queryParams.city,
+		ns0#CountryName: attributes.queryParams.country
+	}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="460ca4ae-deda-4d29-b2de-929941af4d10" message="#[payload]"/>
+		<ee:cache doc:name="Cache" doc:id="ee1c04c2-3ec1-4f66-9aac-3e45a748b78c">
+			<flow-ref doc:name="Flow Reference" doc:id="be725a1d-e09b-412e-bcc9-42b3fc31051c" name="Invoke_Weather_WS_12_Sub_Flow" />
+			<ee:transform doc:name="Create_API_Response" doc:id="7c163df3-99b5-4fbe-97fa-fcf0e8ac7a96">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+ns ns0 http://www.webserviceX.NET
+---
+{
+	SkyConditions: payload.body.ns0#GetWeatherResponse.ns0#GetWeatherResult.NewDataSet.SkyConditions,
+	Status: payload.body.ns0#GetWeatherResponse.ns0#GetWeatherResult.NewDataSet.Status,
+	Temperature: payload.body.ns0#GetWeatherResponse.ns0#GetWeatherResult.NewDataSet.Temperature,
+	RelativeHumidity: payload.body.ns0#GetWeatherResponse.ns0#GetWeatherResult.NewDataSet.RelativeHumidity,
+	WindSpeed: payload.body.ns0#GetWeatherResponse.ns0#GetWeatherResult.NewDataSet.Wind,
+	Time: payload.body.ns0#GetWeatherResponse.ns0#GetWeatherResult.NewDataSet.Time,
+	Visibility: payload.body.ns0#GetWeatherResponse.ns0#GetWeatherResult.NewDataSet.Visibility,
+	DewPoint: payload.body.ns0#GetWeatherResponse.ns0#GetWeatherResult.NewDataSet.DewPoint,
+	Location: vars.city
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		</ee:cache>
+		<error-handler name="get-weatherError_Handler" doc:id="2f366972-045b-43a3-a109-8d4a64d973e5">
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="bb243747-991d-42f9-8e6d-4be9d31767e5" type="WSC:CANNOT_DISPATCH">
+				<logger level="INFO" doc:name="Logger" doc:id="8bf8c01c-327f-4a21-b083-3c84f5824e5f" message='#[{
+	  "Flow":"GetWeather",
+	  "RequestURI":message.attributes.requestUri,
+	  "ErrorCode":error.errorType,
+	  "Error Description":error.description,
+	  "Error Details":error.detailedDescription,
+	  "Other Detail":error.cause
+	
+	}]'/>
+				<set-payload value='#[{
+	  "ErrorCode":error.errorType,
+	  "Error Description":error.description,
+	  "Error Details":error.detailedDescription,
+	  "Other Detail":error.cause
+	
+	}]' doc:name="Set Payload" doc:id="815923a7-c43b-4158-b4a5-a07d7956ed55" />
+				<ee:transform doc:name="Transform Message" doc:id="d094f086-d3e3-4548-843d-6b710a7e227e" >
+					<ee:message >
+						<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+			</on-error-propagate>
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="1a87ee3f-763b-4be4-95f6-588afb26bd6a" type="ANY">
+				<logger level="INFO" doc:name="Logger" doc:id="5366dfed-2ffe-41a3-8190-c4d4c3a47a25" message='#[{
+	  "Flow":"GetWeather",
+	  "RequestURI":message.attributes.requestUri,
+	  "ErrorCode":error.errorType,
+	  "Error Description":error.description,
+	  "Error Details":error.detailedDescription,
+	  "Other Detail":error.cause
+	
+	}]'/>
+				<set-payload value='#[{
+	  "ErrorCode":error.errorType,
+	  "Error Description":error.description,
+	  "Error Details":error.detailedDescription,
+	  "Other Detail":error.cause
+	
+	}]' doc:name="Set Payload" doc:id="394cdab8-5f7a-478e-a5a4-5af4cd3b4caa" />
+				<ee:transform doc:name="Transform Message" doc:id="6d5d607b-fb27-477d-8bae-a9d9ccca3f9b" >
+					<ee:message >
+						<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+			</on-error-propagate>
+
+			
+	</error-handler>
+        
+    
+</flow>
+    
+  
+	
+	
+	
+</mule>

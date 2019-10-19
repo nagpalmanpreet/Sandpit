@@ -1,0 +1,93 @@
+#%RAML 1.0
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/1c074054-8082-4c17-be88-7ab937568057/ # 
+title: Weather API
+version: 1.0
+
+securedBy:
+  -x-api-key
+
+securitySchemes:
+  -x-api-key:
+    description: |
+      API Key Policy for Authenticating API Requests
+    type: x-api-key
+    describedBy:
+      headers:
+        client_id:
+          description: API Client Identifier
+          type: string
+          required: true
+        client_secret:
+          description: API Client Key
+          type: string
+          required: true
+            
+
+types: 
+  Weather: !include datatypes/Weather.raml
+  GeoCountries: !include datatypes/GeoCountries.raml
+  GeoCities: !include datatypes/GeoCities.raml
+  
+/weather:
+  description: Resouce to get weather details for a city and country based search
+  get:
+    displayName: Get Weather
+    queryParameters:
+      country:
+        displayName: Country
+        required: true
+        
+      city:
+        displayName: City
+        required: true
+        
+    responses:
+      200:
+        body:
+          application/json:
+            type: Weather
+            examples:
+              output: !include examples/WeatherExample.raml
+                   
+/geo:
+  get:
+    description: Provides List of countries along with the country code
+    responses:
+      200:
+        body:
+          application/json:
+            type: GeoCountries[]
+            examples:
+              output: !include examples/GeoCountriesExample.raml
+  /{country}:
+    /cities:
+      get:
+        description: Provides List of cities for a country
+        responses:
+          200:
+            body:
+              application/json:
+                type: GeoCities[]
+                examples:
+                  output: !include examples/GeoCitiesExample.raml
+  /country:
+    /{countryCode}:
+      /cities:
+        get:
+          description: Provides List of cities for a countrycode
+          responses:
+            200:
+              body:
+                application/json:
+                  type: GeoCities[]
+                  examples:
+                    output: !include examples/GeoCitiesExample.raml
+        
+
+
+    
+
+                
+
+
+                

@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="GetCitiesByCountry" format="xml">
+      <types:example format="xml" element="{http://www.webserviceX.NET}GetCitiesByCountryResponse" location="examples/GetCitiesByCountry_Response.xml"/>
+    </types:type>
+    <types:type name="GetWeatherResponse" format="xml">
+      <types:example format="xml" element="{http://www.webserviceX.NET}GetWeatherResponse" location="examples/GetWeather_Response.xml"/>
+    </types:type>
+    <types:type name="APIResponse" format="json">
+      <types:shape format="weave" example="examples/APIResponseWeather.json"><![CDATA[%dw 2.0
+
+type APIResponse = {|
+  SkyConditions: String, 
+  Status: String, 
+  Temperature: String, 
+  RelativeHumidity: String, 
+  "Wind Speed": String, 
+  Time: String, 
+  Visibility: String, 
+  DewPoint: String, 
+  Location: String
+|} {"example": "{\"SkyConditions\":\"sunny\",\"Status\":\"Normal\",\"Temperature\":\"18\",\"RelativeHumidity\":\"35\",\"Wind Speed\":\"15 km per hour\",\"Time\":\"11 AM\",\"Visibility\":\"10 km\",\"DewPoint\":\"2 C\",\"Location\":\"DELHI\"}"}
+
+]]></types:shape>
+    </types:type>
+  </types:catalog>
+  <types:enrichment select="#48f8b3a4-c7d8-4d89-a79c-2a250f0e257f">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="GetCitiesByCountry"/>
+        </types:message>
+      </types:input-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#7c163df3-99b5-4fbe-97fa-fcf0e8ac7a96">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="GetWeatherResponse"/>
+        </types:message>
+      </types:input-event>
+    </types:processor-declaration>
+  </types:enrichment>
+</types:mule>

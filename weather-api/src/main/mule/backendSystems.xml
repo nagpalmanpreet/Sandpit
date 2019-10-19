@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:wsc="http://www.mulesoft.org/schema/mule/wsc" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/wsc http://www.mulesoft.org/schema/mule/wsc/current/mule-wsc.xsd">
+	<sub-flow name="Invoke_Weather_WS_11_Sub_Flow" doc:id="ed6fca2d-2b57-4b9b-8747-cf373d05399d" >
+		<wsc:consume operation="GetCitiesByCountry" doc:name="Invoke_Weather_SOAP_WebServiceV11" doc:id="460f9156-1109-4682-9afd-51a60116b519" config-ref="MockSOAP11_Web_Service_Consumer_Config" />
+	</sub-flow>
+		
+	<sub-flow name="Invoke_Weather_WS_12_Sub_Flow" doc:id="57775c69-b1ae-4910-a4a0-fb2a9899827d" >
+		<wsc:consume doc:name="Invoke_Weather_SOAP_WebServiceV12" doc:id="c4237ed6-14c7-4182-86ad-968b7989af99" config-ref="MockSOAP12_Web_Service_Consumer_Config" operation="GetWeather" />
+	</sub-flow>
+</mule>

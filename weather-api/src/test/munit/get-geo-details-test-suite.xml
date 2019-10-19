@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="get-geo-details-test-suite.xml" />
+	<munit:test name="get-geo-details-test-suite-get:\geo:weather-api-configTest" doc:id="59af7c0c-d3e5-4c16-9a5a-e7a2f9862f47" description="Test">
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to get:\geo:weather-api-config" doc:id="646d6082-aed5-42df-bf00-a1de7ecfea91" name="get:\geo:weather-api-config"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="2c1014c9-063f-46ff-8021-99f1c903a247" expression="#[payload]" is="#[MunitTools::withMediaType('application/json')]"/>
+		</munit:validation>
+	</munit:test>
+
+
+</mule>
