@@ -1,0 +1,747 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="ed351b2a-b8c5-4c4a-add3-fbe02cee2682" activeEnvironment="Default" name="MockWeatherWebService" resourceRoot="" soapui-version="5.5.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="6f2cecb9-cdd6-40d8-9c9e-ce28d04009f2" wsaVersion="NONE" name="GlobalWeatherSoap" type="wsdl" bindingName="{http://www.webserviceX.NET}GlobalWeatherSoap" soapVersion="1_1" anonymous="optional" definition="file:/C:/Users/nagpa/Downloads/weatherExcerciseDockerFile/weatherExcerciseDockerFile/wsdl/global-weather-modified.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/C:/Users/nagpa/Downloads/weatherExcerciseDockerFile/weatherExcerciseDockerFile/wsdl/global-weather-modified.wsdl"><con:part><con:url>file:/C:/Users/nagpa/Downloads/weatherExcerciseDockerFile/weatherExcerciseDockerFile/wsdl/global-weather-modified.wsdl</con:url><con:content><![CDATA[<wsdl:definitions targetNamespace="http://www.webserviceX.NET" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:tns="http://www.webserviceX.NET" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://www.webserviceX.NET">
+      <s:element name="GetWeather">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="CityName" type="s:string"/>
+            <s:element maxOccurs="1" minOccurs="0" name="CountryName" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetWeatherResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="GetWeatherResult" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCitiesByCountry">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="CountryName" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCitiesByCountryResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="GetCitiesByCountryResult" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="string" nillable="true" type="s:string"/>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetWeatherSoapIn">
+    <wsdl:part element="tns:GetWeather" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="GetWeatherSoapOut">
+    <wsdl:part element="tns:GetWeatherResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="GetCitiesByCountrySoapIn">
+    <wsdl:part element="tns:GetCitiesByCountry" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="GetCitiesByCountrySoapOut">
+    <wsdl:part element="tns:GetCitiesByCountryResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="GetWeatherHttpGetIn">
+    <wsdl:part name="CityName" type="s:string"/>
+    <wsdl:part name="CountryName" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetWeatherHttpGetOut">
+    <wsdl:part element="tns:string" name="Body"/>
+  </wsdl:message>
+  <wsdl:message name="GetCitiesByCountryHttpGetIn">
+    <wsdl:part name="CountryName" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetCitiesByCountryHttpGetOut">
+    <wsdl:part element="tns:string" name="Body"/>
+  </wsdl:message>
+  <wsdl:message name="GetWeatherHttpPostIn">
+    <wsdl:part name="CityName" type="s:string"/>
+    <wsdl:part name="CountryName" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetWeatherHttpPostOut">
+    <wsdl:part element="tns:string" name="Body"/>
+  </wsdl:message>
+  <wsdl:message name="GetCitiesByCountryHttpPostIn">
+    <wsdl:part name="CountryName" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetCitiesByCountryHttpPostOut">
+    <wsdl:part element="tns:string" name="Body"/>
+  </wsdl:message>
+  <wsdl:portType name="GlobalWeatherSoap">
+    <wsdl:operation name="GetWeather">
+      <wsdl:documentation>Get weather report for all major cities around the world.</wsdl:documentation>
+      <wsdl:input message="tns:GetWeatherSoapIn"/>
+      <wsdl:output message="tns:GetWeatherSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetCitiesByCountry">
+      <wsdl:documentation>Get all major cities by country name(full / part).</wsdl:documentation>
+      <wsdl:input message="tns:GetCitiesByCountrySoapIn"/>
+      <wsdl:output message="tns:GetCitiesByCountrySoapOut"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="GlobalWeatherHttpGet">
+    <wsdl:operation name="GetWeather">
+      <wsdl:documentation>Get weather report for all major cities around the world.</wsdl:documentation>
+      <wsdl:input message="tns:GetWeatherHttpGetIn"/>
+      <wsdl:output message="tns:GetWeatherHttpGetOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetCitiesByCountry">
+      <wsdl:documentation>Get all major cities by country name(full / part).</wsdl:documentation>
+      <wsdl:input message="tns:GetCitiesByCountryHttpGetIn"/>
+      <wsdl:output message="tns:GetCitiesByCountryHttpGetOut"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="GlobalWeatherHttpPost">
+    <wsdl:operation name="GetWeather">
+      <wsdl:documentation>Get weather report for all major cities around the world.</wsdl:documentation>
+      <wsdl:input message="tns:GetWeatherHttpPostIn"/>
+      <wsdl:output message="tns:GetWeatherHttpPostOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetCitiesByCountry">
+      <wsdl:documentation>Get all major cities by country name(full / part).</wsdl:documentation>
+      <wsdl:input message="tns:GetCitiesByCountryHttpPostIn"/>
+      <wsdl:output message="tns:GetCitiesByCountryHttpPostOut"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="GlobalWeatherSoap" type="tns:GlobalWeatherSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="GetWeather">
+      <soap:operation soapAction="http://www.webserviceX.NET/GetWeather" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCitiesByCountry">
+      <soap:operation soapAction="http://www.webserviceX.NET/GetCitiesByCountry" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="GlobalWeatherSoap12" type="tns:GlobalWeatherSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="GetWeather">
+      <soap12:operation soapAction="http://www.webserviceX.NET/GetWeather" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCitiesByCountry">
+      <soap12:operation soapAction="http://www.webserviceX.NET/GetCitiesByCountry" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="GlobalWeatherHttpGet" type="tns:GlobalWeatherHttpGet">
+    <http:binding verb="GET"/>
+    <wsdl:operation name="GetWeather">
+      <http:operation location="/GetWeather"/>
+      <wsdl:input>
+        <http:urlEncoded/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCitiesByCountry">
+      <http:operation location="/GetCitiesByCountry"/>
+      <wsdl:input>
+        <http:urlEncoded/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="GlobalWeatherHttpPost" type="tns:GlobalWeatherHttpPost">
+    <http:binding verb="POST"/>
+    <wsdl:operation name="GetWeather">
+      <http:operation location="/GetWeather"/>
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCitiesByCountry">
+      <http:operation location="/GetCitiesByCountry"/>
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="GlobalWeather">
+    <wsdl:port binding="tns:GlobalWeatherSoap" name="GlobalWeatherSoap">
+      <soap:address location="http://localhost:8080/Cities"/>
+    </wsdl:port>
+    <wsdl:port binding="tns:GlobalWeatherSoap12" name="GlobalWeatherSoap12">
+      <soap12:address location="http://localhost:8080/GlobalWeather"/>
+    </wsdl:port>
+    <wsdl:port binding="tns:GlobalWeatherHttpGet" name="GlobalWeatherHttpGet">
+      <http:address location="http://localhost:8080/GlobalWeather"/>
+    </wsdl:port>
+    <wsdl:port binding="tns:GlobalWeatherHttpPost" name="GlobalWeatherHttpPost">
+      <http:address location="http://localhost:8080/GlobalWeather"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://DESKTOP-N1QB4H3:8088/mockGlobalWeatherSoap</con:endpoint><con:endpoint>http://localhost:8080/Cities</con:endpoint></con:endpoints><con:operation id="10e63e77-2913-490d-8863-5149b6d028e9" isOneWay="false" action="http://www.webserviceX.NET/GetCitiesByCountry" name="GetCitiesByCountry" bindingOperationName="GetCitiesByCountry" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="3e655d6d-88ca-48d8-91b0-4df9114db884" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/Cities</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://www.webserviceX.NET">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <web:GetCitiesByCountry>\r
+         <!--Optional:-->\r
+         <web:CountryName>?</web:CountryName>\r
+      </web:GetCitiesByCountry>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.webserviceX.NET/GetCitiesByCountry"/></con:call></con:operation><con:operation id="072435f6-cdbd-4854-b812-3999c1e99b02" isOneWay="false" action="http://www.webserviceX.NET/GetWeather" name="GetWeather" bindingOperationName="GetWeather" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="8d186047-ff60-4c78-81e4-916556748d7f" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/Cities</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://www.webserviceX.NET">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <web:GetWeather>\r
+         <!--Optional:-->\r
+         <web:CityName>?</web:CityName>\r
+         <!--Optional:-->\r
+         <web:CountryName>?</web:CountryName>\r
+      </web:GetWeather>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.webserviceX.NET/GetWeather"/></con:call></con:operation></con:interface><con:interface xsi:type="con:WsdlInterface" id="718cd088-fe25-4035-af3f-4200d1a8c87b" wsaVersion="NONE" name="GlobalWeatherSoap12" type="wsdl" bindingName="{http://www.webserviceX.NET}GlobalWeatherSoap12" soapVersion="1_2" anonymous="optional" definition="file:/C:/Users/nagpa/Downloads/weatherExcerciseDockerFile/weatherExcerciseDockerFile/wsdl/global-weather-modified.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:\C:\Users\nagpa\Downloads\weatherExcerciseDockerFile\weatherExcerciseDockerFile\wsdl\global-weather-modified.wsdl"><con:part><con:url>file:\C:\Users\nagpa\Downloads\weatherExcerciseDockerFile\weatherExcerciseDockerFile\wsdl\global-weather-modified.wsdl</con:url><con:content><![CDATA[<wsdl:definitions targetNamespace="http://www.webserviceX.NET" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:tns="http://www.webserviceX.NET" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://www.webserviceX.NET">
+      <s:element name="GetWeather">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="CityName" type="s:string"/>
+            <s:element maxOccurs="1" minOccurs="0" name="CountryName" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetWeatherResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="GetWeatherResult" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCitiesByCountry">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="CountryName" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCitiesByCountryResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="GetCitiesByCountryResult" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="string" nillable="true" type="s:string"/>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetWeatherSoapIn">
+    <wsdl:part element="tns:GetWeather" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="GetWeatherSoapOut">
+    <wsdl:part element="tns:GetWeatherResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="GetCitiesByCountrySoapIn">
+    <wsdl:part element="tns:GetCitiesByCountry" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="GetCitiesByCountrySoapOut">
+    <wsdl:part element="tns:GetCitiesByCountryResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="GetWeatherHttpGetIn">
+    <wsdl:part name="CityName" type="s:string"/>
+    <wsdl:part name="CountryName" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetWeatherHttpGetOut">
+    <wsdl:part element="tns:string" name="Body"/>
+  </wsdl:message>
+  <wsdl:message name="GetCitiesByCountryHttpGetIn">
+    <wsdl:part name="CountryName" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetCitiesByCountryHttpGetOut">
+    <wsdl:part element="tns:string" name="Body"/>
+  </wsdl:message>
+  <wsdl:message name="GetWeatherHttpPostIn">
+    <wsdl:part name="CityName" type="s:string"/>
+    <wsdl:part name="CountryName" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetWeatherHttpPostOut">
+    <wsdl:part element="tns:string" name="Body"/>
+  </wsdl:message>
+  <wsdl:message name="GetCitiesByCountryHttpPostIn">
+    <wsdl:part name="CountryName" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetCitiesByCountryHttpPostOut">
+    <wsdl:part element="tns:string" name="Body"/>
+  </wsdl:message>
+  <wsdl:portType name="GlobalWeatherSoap">
+    <wsdl:operation name="GetWeather">
+      <wsdl:documentation>Get weather report for all major cities around the world.</wsdl:documentation>
+      <wsdl:input message="tns:GetWeatherSoapIn"/>
+      <wsdl:output message="tns:GetWeatherSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetCitiesByCountry">
+      <wsdl:documentation>Get all major cities by country name(full / part).</wsdl:documentation>
+      <wsdl:input message="tns:GetCitiesByCountrySoapIn"/>
+      <wsdl:output message="tns:GetCitiesByCountrySoapOut"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="GlobalWeatherHttpGet">
+    <wsdl:operation name="GetWeather">
+      <wsdl:documentation>Get weather report for all major cities around the world.</wsdl:documentation>
+      <wsdl:input message="tns:GetWeatherHttpGetIn"/>
+      <wsdl:output message="tns:GetWeatherHttpGetOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetCitiesByCountry">
+      <wsdl:documentation>Get all major cities by country name(full / part).</wsdl:documentation>
+      <wsdl:input message="tns:GetCitiesByCountryHttpGetIn"/>
+      <wsdl:output message="tns:GetCitiesByCountryHttpGetOut"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="GlobalWeatherHttpPost">
+    <wsdl:operation name="GetWeather">
+      <wsdl:documentation>Get weather report for all major cities around the world.</wsdl:documentation>
+      <wsdl:input message="tns:GetWeatherHttpPostIn"/>
+      <wsdl:output message="tns:GetWeatherHttpPostOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetCitiesByCountry">
+      <wsdl:documentation>Get all major cities by country name(full / part).</wsdl:documentation>
+      <wsdl:input message="tns:GetCitiesByCountryHttpPostIn"/>
+      <wsdl:output message="tns:GetCitiesByCountryHttpPostOut"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="GlobalWeatherSoap" type="tns:GlobalWeatherSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="GetWeather">
+      <soap:operation soapAction="http://www.webserviceX.NET/GetWeather" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCitiesByCountry">
+      <soap:operation soapAction="http://www.webserviceX.NET/GetCitiesByCountry" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="GlobalWeatherSoap12" type="tns:GlobalWeatherSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="GetWeather">
+      <soap12:operation soapAction="http://www.webserviceX.NET/GetWeather" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCitiesByCountry">
+      <soap12:operation soapAction="http://www.webserviceX.NET/GetCitiesByCountry" style="document"/>
+      <wsdl:input>
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="GlobalWeatherHttpGet" type="tns:GlobalWeatherHttpGet">
+    <http:binding verb="GET"/>
+    <wsdl:operation name="GetWeather">
+      <http:operation location="/GetWeather"/>
+      <wsdl:input>
+        <http:urlEncoded/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCitiesByCountry">
+      <http:operation location="/GetCitiesByCountry"/>
+      <wsdl:input>
+        <http:urlEncoded/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="GlobalWeatherHttpPost" type="tns:GlobalWeatherHttpPost">
+    <http:binding verb="POST"/>
+    <wsdl:operation name="GetWeather">
+      <http:operation location="/GetWeather"/>
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCitiesByCountry">
+      <http:operation location="/GetCitiesByCountry"/>
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded"/>
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="GlobalWeather">
+    <wsdl:port binding="tns:GlobalWeatherSoap" name="GlobalWeatherSoap">
+      <soap:address location="http://localhost:8080/Cities"/>
+    </wsdl:port>
+    <wsdl:port binding="tns:GlobalWeatherSoap12" name="GlobalWeatherSoap12">
+      <soap12:address location="http://localhost:8080/GlobalWeather"/>
+    </wsdl:port>
+    <wsdl:port binding="tns:GlobalWeatherHttpGet" name="GlobalWeatherHttpGet">
+      <http:address location="http://localhost:8080/GlobalWeather"/>
+    </wsdl:port>
+    <wsdl:port binding="tns:GlobalWeatherHttpPost" name="GlobalWeatherHttpPost">
+      <http:address location="http://localhost:8080/GlobalWeather"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://DESKTOP-N1QB4H3:8000/mockGlobalWeatherSoap12</con:endpoint><con:endpoint>http://localhost:8080/GlobalWeather</con:endpoint></con:endpoints><con:operation id="f0cd4bad-8f75-46ff-bf1d-4082ae7750bc" isOneWay="false" action="http://www.webserviceX.NET/GetCitiesByCountry" name="GetCitiesByCountry" bindingOperationName="GetCitiesByCountry" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="a2f93745-2acd-4068-b8dc-ab92b3ba618a" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/GlobalWeather</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:web="http://www.webserviceX.NET">\r
+   <soap:Header/>\r
+   <soap:Body>\r
+      <web:GetCitiesByCountry>\r
+         <!--Optional:-->\r
+         <web:CountryName>?</web:CountryName>\r
+      </web:GetCitiesByCountry>\r
+   </soap:Body>\r
+</soap:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.webserviceX.NET/GlobalWeatherSoap/GetCitiesByCountryRequest"/></con:call></con:operation><con:operation id="789ecaab-4ca7-400c-aaa6-c59bf79f07f1" isOneWay="false" action="http://www.webserviceX.NET/GetWeather" name="GetWeather" bindingOperationName="GetWeather" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="0e98fa52-fc32-405f-8a11-6a56b349b7fb" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8000/mockGlobalWeatherSoap12?WSDL</con:endpoint><con:request><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:web="http://www.webserviceX.NET">\r
+   <soap:Header/>\r
+   <soap:Body>\r
+      <web:GetWeather>\r
+         <!--Optional:-->\r
+         <web:CityName>MEL</web:CityName>\r
+         <!--Optional:-->\r
+         <web:CountryName>AUD</web:CountryName>\r
+      </web:GetWeather>\r
+   </soap:Body>\r
+</soap:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.webserviceX.NET/GlobalWeatherSoap/GetWeatherRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:mockService id="c190cae1-21e0-4ac1-835b-1d143f45cee7" port="8000" path="/mockGlobalWeatherSoap12" host="DESKTOP-N1QB4H3" name="GlobalWeatherSoap12 MockService"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.mock.WsdlMockService@require-soap-action">false</con:setting></con:settings><con:properties/><con:mockOperation name="GetWeather" id="6f4a426f-0724-48f4-8267-5a38557fd256" interface="GlobalWeatherSoap12" operation="GetWeather"><con:settings/><con:defaultResponse>Response 1</con:defaultResponse><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:response name="Response 1" id="a79e146a-4f1c-499a-8594-3f3dc94a0a14" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:web="http://www.webserviceX.NET">
+   <soap:Header/>
+  <soap:Body>
+      <web:GetWeatherResponse xmlns:web="http://www.webserviceX.NET">
+         <web:GetWeatherResult>
+            <NewDataSet>
+               <Location>Melbourne</Location>
+               <Time>11 AM</Time>
+               <Wind>15 km per hour</Wind>
+               <Visibility>10 km</Visibility>
+               <SkyConditions>sunny</SkyConditions>
+               <Temperature>18</Temperature>
+               <DewPoint>2 C</DewPoint>
+               <RelativeHumidity>35</RelativeHumidity>
+               <Status>Normal</Status>
+            </NewDataSet>
+         </web:GetWeatherResult>
+      </web:GetWeatherResponse>
+   </soap:Body>
+
+</soap:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.webserviceX.NET/GlobalWeatherSoap/GetWeatherResponse"/></con:response><con:dispatchConfig/></con:mockOperation></con:mockService><con:mockService id="bf0ea394-c516-40ec-825c-30691b1b33bc" port="8088" path="/mockGlobalWeatherSoap" host="DESKTOP-N1QB4H3" name="GlobalWeatherSoap MockService"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.mock.WsdlMockService@require-soap-action">false</con:setting></con:settings><con:properties/><con:mockOperation name="GetCitiesByCountry" id="1ba87f26-eaa0-40aa-8551-e9031b722688" interface="GlobalWeatherSoap" operation="GetCitiesByCountry"><con:settings/><con:defaultResponse>Response 1</con:defaultResponse><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:response name="Response 1" id="0c6394a0-5276-4fd3-9b92-d8ca02e345d3" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://www.webserviceX.NET">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <web:GetCitiesByCountryResponse>
+         <!--Optional:-->
+         <web:GetCitiesByCountryResult>
+            <NewDataSet>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Archerfield Aerodrome</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Amberley Aerodrome</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Alice Springs Aerodrome</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Brisbane Airport M. O</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Coolangatta Airport Aws</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Cairns Airport</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Charleville Airport</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Gladstone</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Longreach Airport</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Mount Isa Amo</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Mackay Mo</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Oakey Aerodrome</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Proserpine Airport</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Rockhampton Airport</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Broome Airport</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Townsville Amo</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Weipa City</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Gove Airport</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Tennant Creek Airport</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Yulara Aws</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Albury Airport</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Devonport East</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Goldstream Aws</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>East Sale Aerodrome</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Hobart Airport</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Launceston Airport</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Laverton Aerodrome</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Moorabbin Airport Aws</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Mount Gambier Aerodrome</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Mildura Airport</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Melbourne Airport</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Macquarie Island</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Wynyard West</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Adelaide Airport</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Albany Airport</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Broken Hill Patton Street</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Ceduna Airport</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Derby</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Darwin Airport</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Bullsbrook Pearce Amo</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Edinburgh M. O.</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Forrest Airport</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Geraldton Airport</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Kalgoorlie Boulder Amo</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Kununurra Kununurra Aws</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Leigh Creek Airport</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Learmonth Airport</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Meekatharra Airport</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Port Hedland Pardoo</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Parafield Airport</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Belmont Perth Airport</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Katherine Aerodrome</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Woomera Aerodrome</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Bankstown Airport Aws</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Canberra</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Coffs Harbour Mo</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Cooma</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Camden Airport</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Dubbo</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Norfolk Island Airport</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Nowra Ran Air Station</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Richmond Aus-Afb</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Sydney Airport</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Tamworth Airport</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Wagga Airport</City>
+               </Table>
+               <Table>
+                  <Country>Australia</Country>
+                  <City>Williamtown Aerodrome</City>
+               </Table>
+            </NewDataSet>
+         </web:GetCitiesByCountryResult>
+      </web:GetCitiesByCountryResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.webserviceX.NET/GetCitiesByCountry"/></con:response><con:dispatchConfig/></con:mockOperation></con:mockService><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/></con:soapui-project>
