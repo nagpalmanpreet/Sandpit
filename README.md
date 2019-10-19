@@ -25,5 +25,7 @@ Steps to test the Weather API :
 6) Mule Config property file located at - /weather-api/src/main/resources/weather-api.properties
 
       http.port=8081
+      
       wsdl.url.soap11=http://localhost:8088/mockGlobalWeatherSoap
+      
       wsdl.url.soap12=http://localhost:8000/mockGlobalWeatherSoap12
