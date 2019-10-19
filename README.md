@@ -1,5 +1,10 @@
 # Sandpit
 
+Mule Server - 4.2.1 EE
+Anypoint Studio - 7.3.5
+
+
+
 Steps to test the Weather API :
 
 1) Import Sandpit\soapui-mock-app\MockWeatherWebService-soapui-project.xml to SOAP UI
