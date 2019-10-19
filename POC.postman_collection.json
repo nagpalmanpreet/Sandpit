@@ -1,0 +1,71 @@
+{
+	"variables": [],
+	"info": {
+		"name": "POC",
+		"_postman_id": "17f3042d-21be-251a-3f6a-0d670daca5d5",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GetWeather",
+			"request": {
+				"url": {
+					"raw": "http://localhost:8081/data/v1/weather?country=Australia&city=Melbourne",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"data",
+						"v1",
+						"weather"
+					],
+					"query": [
+						{
+							"key": "country",
+							"value": "Australia",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "city",
+							"value": "Melbourne",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "GetCitiesByCountryName",
+			"request": {
+				"url": "http://localhost:8081/data/v1/geo/Australia/cities",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "GeoData",
+			"request": {
+				"url": "http://localhost:8081/data/v1/geo",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
